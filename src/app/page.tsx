@@ -1,8 +1,25 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Clock, MapPin, UtensilsCrossed, CalendarClock, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Clock,
+  MapPin,
+  UtensilsCrossed,
+  CalendarClock,
+  Trees,
+  Award,
+  Wine,
+  Car,
+  PawPrint,
+} from "lucide-react";
 import { getFeaturedItems, getMenuCategories } from "@/lib/menu";
 import { formatPrice, parseTags } from "@/lib/format";
 import { DigitalMenuExplorer } from "@/components/DigitalMenuExplorer";
+
+const VINNERO_URL = "https://app.vinnero.com.br";
+const MAPS_URL =
+  "https://www.google.com/maps/search/?api=1&query=Avenida+Quinta+Avenida+739+Vale+do+Sol+Nova+Lima+MG";
 
 export const dynamic = "force-dynamic";
 
@@ -14,84 +31,92 @@ export default async function HomePage() {
 
   return (
     <div className="bg-canvas text-ink">
-      {/* Hero Editorial */}
-      <section className="editorial-texture border-b border-line/80">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-12 lg:py-28">
-          <div className="lg:col-span-7">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-terracotta">
-              Cozinha Brasileira Contemporânea
+      {/* Hero Editorial — Vale do Sol */}
+      <section className="editorial-texture border-b border-line">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-12 lg:gap-14 lg:py-24">
+          <div className="lg:col-span-6">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-terracotta">
+              <span
+                aria-hidden="true"
+                className="h-px w-6 bg-gold"
+              />
+              Vale do Sol • Nova Lima, MG
             </p>
-            <h1 className="mt-4 font-display text-5xl font-semibold leading-[1.06] tracking-[-0.02em] text-ink sm:text-6xl lg:text-[4.25rem]">
-              Sabores artesanais preparados para celebrar à mesa.
+
+            <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.015em] text-forest sm:text-5xl lg:text-[3.5rem]">
+              Gastronomia autoral, fogo lento e hospitalidade entre as
+              montanhas.
             </h1>
+
             <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
-              No Divino Restaurante, ingredientes frescos da estação encontram o
-              tempo certo do fogo lento. Explore nosso cardápio digital atualizado
-              e descubra entradas, cortes na brasa, risotos e sobremesas da casa.
+              No diVino Restaurante, ingredientes frescos da estação e receitas
+              afetivas ganham vida em um refúgio cercado pela natureza, com mais
+              de uma década de tradição na Associação dos Restaurantes da Boa
+              Lembrança.
             </p>
 
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link
                 href="/reservas"
                 id="hero-cta-reservas"
-                className="inline-flex items-center gap-2.5 rounded-full bg-ink px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] text-canvas transition-all hover:bg-terracotta"
+                className="inline-flex items-center gap-2.5 rounded-xl bg-forest px-7 py-3.5 text-sm font-semibold text-card shadow-[0_12px_28px_-12px_rgba(43,58,44,0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-terracotta"
               >
-                <CalendarClock className="h-4 w-4" aria-hidden="true" />
+                <CalendarClock className="h-4 w-4 text-gold" aria-hidden="true" />
                 Reservar Mesa
               </Link>
+
               <Link
                 href="/cardapio"
                 id="hero-cta-cardapio"
-                className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-ink transition-colors hover:border-terracotta hover:text-terracotta"
+                className="inline-flex items-center gap-2 rounded-xl border border-line bg-card px-6 py-3.5 text-sm font-semibold text-forest transition-all duration-300 hover:-translate-y-0.5 hover:border-terracotta hover:text-terracotta"
               >
-                <UtensilsCrossed className="h-3.5 w-3.5" aria-hidden="true" />
+                <UtensilsCrossed className="h-4 w-4" aria-hidden="true" />
                 Explorar Cardápio
-                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
+            </div>
+
+            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-line pt-6 text-xs font-medium text-ink-muted">
+              <span className="inline-flex items-center gap-2">
+                <Award className="h-4 w-4 text-terracotta" aria-hidden="true" />
+                Boa Lembrança desde 2012
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Clock className="h-4 w-4 text-terracotta" aria-hidden="true" />
+                Quarta a Domingo · Almoço &amp; Jantar
+              </span>
             </div>
           </div>
 
-          {/* Quadro Editorial de Destaque */}
-          <div className="lg:col-span-5">
-            <div className="rounded-3xl border border-line bg-card p-7 shadow-[0_18px_45px_-28px_rgba(31,25,20,0.22)] sm:p-9">
-              <div className="flex items-center justify-between border-b border-line-soft pb-4">
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-muted">
-                  Sugestão do Chef
-                </span>
-                <span className="font-display text-sm italic text-terracotta">
-                  Temporada Atual
-                </span>
+          {/* Composição Fotográfica Editorial */}
+          <div className="lg:col-span-6">
+            <figure className="overflow-hidden rounded-xl border border-line bg-card p-2.5 shadow-[0_24px_56px_-28px_rgba(43,58,44,0.3)] sm:p-3">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+                <Image
+                  src="/images/hero-table.jpg"
+                  alt="Mesa artesanal em madeira de demolição no diVino Restaurante com prato em cerâmica artesanal e vista para as montanhas do Vale do Sol"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 hover:scale-[1.03]"
+                />
               </div>
-
-              <div className="mt-6 space-y-5">
-                {featuredItems.slice(0, 3).map((item) => (
-                  <div
-                    key={item.id}
-                    className="border-b border-line-soft pb-4 last:border-b-0 last:pb-0"
-                  >
-                    <div className="flex items-baseline justify-between gap-3">
-                      <h2 className="font-display text-xl font-semibold text-ink">
-                        {item.name}
-                      </h2>
-                      <span className="shrink-0 font-display text-lg font-semibold text-terracotta-dark">
-                        {formatPrice(item.priceCents)}
-                      </span>
-                    </div>
-                    <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-ink-soft">
-                      {item.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-7 flex items-center justify-between rounded-2xl bg-paper/80 px-4 py-3.5 text-xs text-ink-soft">
-                <span className="flex items-center gap-2 font-medium text-ink">
-                  <Clock className="h-4 w-4 text-terracotta" aria-hidden="true" />
-                  Aberto de Terça a Domingo
+              <figcaption className="flex flex-wrap items-center justify-between gap-2 px-2 pb-1 pt-3.5 text-xs text-ink-soft">
+                <span className="font-display text-base font-medium text-forest">
+                  Cozinha de Estação &amp; Cerâmica Artesanal
                 </span>
-                <span>Almoço & Jantar</span>
-              </div>
-            </div>
+                <a
+                  href={VINNERO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-medium text-terracotta transition-colors duration-300 hover:text-forest"
+                >
+                  <Wine className="h-3.5 w-3.5" aria-hidden="true" />
+                  Carta de Vinhos Vinnero
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </section>
@@ -108,14 +133,15 @@ export default async function HomePage() {
             </p>
             <h2
               id="destaques-heading"
-              className="mt-2 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
+              className="mt-2 font-display text-3xl font-semibold tracking-tight text-forest sm:text-5xl"
             >
               Destaques da Cozinha
             </h2>
           </div>
+
           <Link
             href="/cardapio"
-            className="inline-flex items-center gap-2 text-sm font-medium text-terracotta transition-colors hover:text-terracotta-dark"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-terracotta transition-colors duration-300 hover:text-forest"
           >
             Ver página exclusiva do cardápio
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -128,13 +154,13 @@ export default async function HomePage() {
             return (
               <article
                 key={item.id}
-                className="flex flex-col justify-between rounded-2xl border border-line bg-card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-terracotta/40"
+                className="group flex flex-col justify-between rounded-xl border border-line bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-gold/80 hover:shadow-[0_16px_36px_-18px_rgba(43,58,44,0.18)]"
               >
                 <div>
                   <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-muted">
                     {item.categoryName}
                   </span>
-                  <h3 className="mt-2 font-display text-2xl font-semibold leading-snug text-ink">
+                  <h3 className="mt-2 font-display text-2xl font-semibold leading-snug text-ink transition-colors duration-300 group-hover:text-terracotta">
                     {item.name}
                   </h3>
                   <p className="mt-2.5 text-sm leading-relaxed text-ink-soft">
@@ -142,12 +168,12 @@ export default async function HomePage() {
                   </p>
                 </div>
 
-                <div className="mt-6 flex items-center justify-between border-t border-line-soft pt-4">
-                  <span className="font-display text-xl font-semibold text-terracotta-dark">
+                <div className="mt-6 flex items-center justify-between gap-2 border-t border-line-soft pt-4">
+                  <span className="font-sans text-base font-semibold tabular-nums text-terracotta">
                     {formatPrice(item.priceCents)}
                   </span>
                   {tags[0] && (
-                    <span className="rounded-full bg-paper px-2.5 py-0.5 text-[11px] font-medium text-ink-soft">
+                    <span className="rounded-full border border-line bg-canvas px-2.5 py-0.5 text-[11px] font-medium text-ink-soft">
                       {tags[0]}
                     </span>
                   )}
@@ -162,23 +188,23 @@ export default async function HomePage() {
       <section
         id="cardapio"
         aria-labelledby="cardapio-home-heading"
-        className="border-y border-line/80 bg-paper/40 py-16 sm:py-24"
+        className="border-y border-line bg-paper/65 py-16 sm:py-24"
       >
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
           <div className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-terracotta">
-              Cardápio Digital
+              Cardápio da Casa
             </p>
             <h2
               id="cardapio-home-heading"
-              className="mt-2 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
+              className="mt-2 font-display text-3xl font-semibold tracking-tight text-forest sm:text-5xl"
             >
-              Sabores para cada momento do dia
+              Sabores para Cada Momento à Mesa
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-ink-soft sm:text-base">
-              Filtre por categoria, restrições alimentares ou busque seu prato
-              favorito. Os itens abaixo são servidos diretamente do banco de
-              dados do sistema e prontos para receber o cardápio real da casa.
+              Navegue pelos pratos autorais da nossa cozinha, filtre por
+              categoria ou restrições alimentares e descubra a harmonização
+              ideal em nossa Carta de Vinhos Digital.
             </p>
           </div>
 
@@ -188,67 +214,100 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* A Casa & Serviços */}
+      {/* A Casa — 3 Pilares */}
       <section
         id="a-casa"
         aria-labelledby="a-casa-heading"
         className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24"
       >
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
-          <div className="lg:col-span-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-terracotta">
-              A Casa
-            </p>
-            <h2
-              id="a-casa-heading"
-              className="mt-2 font-display text-4xl font-semibold leading-tight tracking-tight text-ink sm:text-5xl"
+        <div className="max-w-2xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-terracotta">
+            A Casa
+          </p>
+          <h2
+            id="a-casa-heading"
+            className="mt-2 font-display text-3xl font-semibold leading-tight tracking-tight text-forest sm:text-5xl"
+          >
+            Tradição, Natureza e Hospitalidade no Vale do Sol
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-ink-soft sm:text-base">
+            Cada detalhe do diVino Restaurante foi concebido para transformar o
+            almoço ou jantar em uma pausa serena entre as montanhas de Nova
+            Lima.
+          </p>
+        </div>
+
+        {/* Fotografia Editorial do Salão */}
+        <figure className="mt-10 overflow-hidden rounded-xl border border-line bg-card p-2.5 shadow-[0_20px_48px_-28px_rgba(43,58,44,0.26)] sm:p-3">
+          <div className="relative aspect-[16/9] overflow-hidden rounded-lg sm:aspect-[21/9]">
+            <Image
+              src="/images/casa-ambience.jpg"
+              alt="Salão intimista em madeira de demolição do diVino Restaurante com cerâmicas pintadas à mão e vista para a área verde do Vale do Sol"
+              fill
+              sizes="(max-width: 1280px) 100vw, 1152px"
+              className="object-cover"
+            />
+          </div>
+        </figure>
+
+        {/* 3 Pilares */}
+        <div className="mt-8 grid gap-6 md:grid-cols-3">
+          <article className="flex flex-col justify-between rounded-xl border border-line bg-card p-7 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/80 hover:shadow-[0_14px_34px_-16px_rgba(43,58,44,0.16)]">
+            <div>
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-forest/10 text-forest">
+                <Trees className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <h3 className="mt-5 font-display text-2xl font-semibold text-forest">
+                O Refúgio no Vale do Sol
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+                Salão intimista em madeira de demolição, iluminação acolhedora e
+                clima bucólico na Avenida Quinta Avenida, 739 — ideal tanto para
+                almoços ensolarados em família quanto para jantares especiais.
+              </p>
+            </div>
+          </article>
+
+          <article className="flex flex-col justify-between rounded-xl border border-line bg-card p-7 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/80 hover:shadow-[0_14px_34px_-16px_rgba(43,58,44,0.16)]">
+            <div>
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-terracotta/10 text-terracotta">
+                <Award className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <h3 className="mt-5 font-display text-2xl font-semibold text-forest">
+                Tradição Boa Lembrança
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+                Integrante orgulhoso da Associação dos Restaurantes da Boa
+                Lembrança desde 2012, celebrando a alta gastronomia brasileira
+                com pratos exclusivos e cerâmicas pintadas à mão.
+              </p>
+            </div>
+          </article>
+
+          <article className="flex flex-col justify-between rounded-xl border border-line bg-card p-7 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/80 hover:shadow-[0_14px_34px_-16px_rgba(43,58,44,0.16)]">
+            <div>
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-forest/10 text-forest">
+                <Wine className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <h3 className="mt-5 font-display text-2xl font-semibold text-forest">
+                Adega &amp; Harmonização
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+                Uma curadoria de vinhos pensada para acompanhar cada estação do
+                cardápio, com consulta interativa pela plataforma Vinnero.
+              </p>
+            </div>
+
+            <a
+              href={VINNERO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-terracotta transition-colors duration-300 hover:text-forest"
             >
-              Hospitalidade pensada nos detalhes.
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-ink-soft sm:text-base">
-              Do almoço tranquilo em família ao jantar comemorativo, o Divino
-              Restaurante une ingredientes selecionados, serviço atencioso e
-              ambiente acolhedor.
-            </p>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:col-span-7">
-            <div className="rounded-2xl border border-line bg-card p-6">
-              <Sparkles
-                className="h-5 w-5 text-terracotta"
-                aria-hidden="true"
-              />
-              <h3 className="mt-4 font-display text-2xl font-semibold text-ink">
-                Ingredientes da Estação
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-                Produção diária com caldos naturais, cortes selecionados e
-                opções vegetarianas e sem glúten bem sinalizadas no cardápio.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-line bg-card p-6">
-              <CalendarClock
-                className="h-5 w-5 text-terracotta"
-                aria-hidden="true"
-              />
-              <h3 className="mt-4 font-display text-2xl font-semibold text-ink">
-                Reservas & Eventos
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-                Estrutura preparada para receber grupos, jantares corporativos e
-                celebrações com reserva online imediata e código de
-                acompanhamento.
-              </p>
-              <Link
-                href="/reservas"
-                className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-terracotta transition-colors hover:text-terracotta-dark"
-              >
-                Solicitar reserva
-                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
+              Consultar Carta no Vinnero
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </article>
         </div>
       </section>
 
@@ -256,40 +315,118 @@ export default async function HomePage() {
       <section
         id="horarios"
         aria-labelledby="horarios-heading"
-        className="border-t border-line/80 bg-card py-16 sm:py-20"
+        className="border-t border-line bg-card py-16 sm:py-24"
       >
-        <div className="mx-auto grid max-w-6xl gap-8 px-5 sm:px-8 md:grid-cols-3">
-          <div>
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <div className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-terracotta">
               Visite-nos
             </p>
             <h2
               id="horarios-heading"
-              className="mt-2 font-display text-3xl font-semibold text-ink sm:text-4xl"
+              className="mt-2 font-display text-3xl font-semibold tracking-tight text-forest sm:text-5xl"
             >
-              Horários & Localização
+              Horários &amp; Localização
             </h2>
           </div>
 
-          <div className="space-y-2 text-sm text-ink-soft">
-            <div className="flex items-center gap-2 font-semibold text-ink">
-              <Clock className="h-4 w-4 text-terracotta" aria-hidden="true" />
-              Horário de Funcionamento
-            </div>
-            <p>Terça a Sexta: 11h30 – 15h00 · 18h30 – 23h00</p>
-            <p>Sábados e Domingos: 11h30 – 23h00</p>
-            <p className="text-xs text-ink-muted">Segunda-feira: Fechado</p>
-          </div>
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {/* Endereço Oficial */}
+            <div className="flex flex-col justify-between rounded-xl border border-line bg-canvas p-6 sm:p-7">
+              <div>
+                <div className="flex items-center gap-2.5 text-sm font-semibold text-forest">
+                  <MapPin
+                    className="h-4 w-4 shrink-0 text-terracotta"
+                    aria-hidden="true"
+                  />
+                  Endereço Oficial
+                </div>
+                <p className="mt-4 text-sm leading-relaxed text-ink-soft">
+                  Avenida Quinta Avenida, 739 – Vale do Sol, Nova Lima – MG, CEP
+                  34000-000
+                </p>
+              </div>
 
-          <div className="space-y-2 text-sm text-ink-soft">
-            <div className="flex items-center gap-2 font-semibold text-ink">
-              <MapPin className="h-4 w-4 text-terracotta" aria-hidden="true" />
-              Endereço & Atendimento
+              <a
+                id="home-google-maps-cta"
+                href={MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-forest px-5 py-3 text-sm font-semibold text-card transition-all duration-300 hover:bg-terracotta"
+              >
+                Traçar Rota no Google Maps
+                <ArrowUpRight className="h-4 w-4 text-gold" aria-hidden="true" />
+              </a>
             </div>
-            <p>
-              Atualize aqui com o endereço, link do Google Maps e WhatsApp
-              oficiais do Divino Restaurante.
-            </p>
+
+            {/* Horários de Funcionamento */}
+            <div className="rounded-xl border border-line bg-canvas p-6 sm:p-7">
+              <div className="flex items-center gap-2.5 text-sm font-semibold text-forest">
+                <Clock
+                  className="h-4 w-4 shrink-0 text-terracotta"
+                  aria-hidden="true"
+                />
+                Horários de Funcionamento
+              </div>
+              <ul className="mt-4 space-y-3 text-sm leading-relaxed text-ink-soft">
+                <li>
+                  <strong className="font-semibold text-ink">
+                    Quarta a Sexta:
+                  </strong>{" "}
+                  18h30 às 23h00 (Sexta também almoço: 12h00 às 15h30)
+                </li>
+                <li>
+                  <strong className="font-semibold text-ink">Sábados:</strong>{" "}
+                  12h00 às 16h00 · 19h00 às 23h00
+                </li>
+                <li>
+                  <strong className="font-semibold text-ink">
+                    Domingos e Feriados:
+                  </strong>{" "}
+                  12h00 às 16h30
+                </li>
+                <li className="border-t border-line-soft pt-2.5 text-xs font-medium text-ink-muted">
+                  Segunda e Terça: Fechado
+                </li>
+              </ul>
+            </div>
+
+            {/* Diferenciais */}
+            <div className="flex flex-col justify-between rounded-xl border border-line bg-canvas p-6 sm:p-7">
+              <div>
+                <div className="flex items-center gap-2.5 text-sm font-semibold text-forest">
+                  <Trees
+                    className="h-4 w-4 shrink-0 text-terracotta"
+                    aria-hidden="true"
+                  />
+                  Diferenciais da Casa
+                </div>
+                <ul className="mt-4 space-y-3.5 text-sm text-ink-soft">
+                  <li className="flex items-start gap-2.5">
+                    <Car
+                      className="mt-0.5 h-4 w-4 shrink-0 text-terracotta"
+                      aria-hidden="true"
+                    />
+                    <span>Estacionamento fácil no local</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <PawPrint
+                      className="mt-0.5 h-4 w-4 shrink-0 text-terracotta"
+                      aria-hidden="true"
+                    />
+                    <span>Ambiente pet-friendly na área externa</span>
+                  </li>
+                </ul>
+              </div>
+
+              <Link
+                href="/reservas"
+                className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl border border-forest/25 bg-card px-5 py-3 text-sm font-semibold text-forest transition-all duration-300 hover:border-terracotta hover:text-terracotta"
+              >
+                Reservar Mesa Online
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

@@ -1,9 +1,19 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search, Sparkles, Leaf, WheatOff, RotateCcw } from "lucide-react";
+import {
+  Search,
+  Sparkles,
+  Leaf,
+  WheatOff,
+  RotateCcw,
+  Wine,
+  ArrowUpRight,
+} from "lucide-react";
 import type { MenuCategoryDTO } from "@/lib/menu";
 import { formatPrice, parseTags } from "@/lib/format";
+
+const VINNERO_URL = "https://app.vinnero.com.br";
 
 interface DigitalMenuExplorerProps {
   categories: MenuCategoryDTO[];
@@ -61,8 +71,46 @@ export function DigitalMenuExplorer({ categories }: DigitalMenuExplorerProps) {
 
   return (
     <div className="space-y-8">
+      {/* Banner de Harmonização — Carta de Vinhos Vinnero */}
+      <aside
+        aria-label="Carta de Vinhos Digital Vinnero"
+        className="relative overflow-hidden rounded-xl border border-gold/35 bg-forest p-6 text-card shadow-[0_18px_40px_-24px_rgba(43,58,44,0.45)] sm:p-8"
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full bg-gold/10 blur-2xl"
+        />
+        <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-2xl">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-gold uppercase">
+              <Wine className="h-4 w-4" aria-hidden="true" />
+              Carta de Vinhos Digital • Vinnero
+            </p>
+            <h3 className="mt-2 font-display text-2xl font-semibold leading-snug text-card sm:text-3xl">
+              Harmonize sua experiência
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-card/85 sm:text-base">
+              Explore nossa seleção de rótulos nacionais e importados com notas
+              de degustação e sugestões do chef em nossa Carta de Vinhos
+              Digital.
+            </p>
+          </div>
+
+          <a
+            id="menu-vinnero-cta"
+            href={VINNERO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-gold px-6 py-3.5 text-sm font-semibold text-ink shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-card hover:text-forest"
+          >
+            Acessar Carta de Vinhos Vinnero
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </a>
+        </div>
+      </aside>
+
       {/* Barra de busca e filtros */}
-      <div className="rounded-2xl border border-line bg-card p-5 shadow-[0_1px_2px_rgba(31,25,20,0.04)] sm:p-6">
+      <div className="rounded-xl border border-line bg-card p-5 shadow-[0_10px_28px_-18px_rgba(43,58,44,0.12)] sm:p-6">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="relative flex-1 lg:max-w-md">
             <label htmlFor="menu-search-input" className="sr-only">
@@ -78,7 +126,7 @@ export function DigitalMenuExplorer({ categories }: DigitalMenuExplorerProps) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Buscar prato, ingrediente ou bebida..."
-              className="w-full rounded-full border border-line bg-canvas py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-ink-muted transition-colors focus:border-terracotta focus:outline-none"
+              className="w-full rounded-xl border border-line bg-canvas py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-ink-muted transition-colors duration-300 focus:border-forest focus:outline-none"
             />
           </div>
 
@@ -97,10 +145,10 @@ export function DigitalMenuExplorer({ categories }: DigitalMenuExplorerProps) {
                     )
                   }
                   aria-pressed={isActive}
-                  className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-xs font-medium transition-all ${
+                  className={`inline-flex items-center gap-1.5 rounded-xl border px-3.5 py-2 text-xs font-medium transition-all duration-300 ${
                     isActive
-                      ? "border-terracotta bg-terracotta text-canvas"
-                      : "border-line bg-canvas text-ink-soft hover:border-terracotta/50 hover:text-ink"
+                      ? "border-terracotta bg-terracotta text-card shadow-sm"
+                      : "border-line bg-canvas text-ink-soft hover:border-gold hover:text-ink"
                   }`}
                 >
                   <Icon className="h-3.5 w-3.5" aria-hidden="true" />
@@ -114,7 +162,7 @@ export function DigitalMenuExplorer({ categories }: DigitalMenuExplorerProps) {
                 type="button"
                 id="menu-reset-filters"
                 onClick={resetFilters}
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium text-ink-muted transition-colors hover:text-terracotta"
+                className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-medium text-ink-muted transition-colors duration-300 hover:text-terracotta"
               >
                 <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
                 Limpar
@@ -123,11 +171,11 @@ export function DigitalMenuExplorer({ categories }: DigitalMenuExplorerProps) {
           </div>
         </div>
 
-        {/* Abas de categorias */}
+        {/* Abas de categorias — rolagem suave no mobile e quebra elegante no desktop */}
         <div
           role="tablist"
           aria-label="Categorias do cardápio"
-          className="mt-5 flex flex-wrap gap-2 border-t border-line-soft pt-5"
+          className="mt-5 flex gap-2 overflow-x-auto border-t border-line-soft pt-5 pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0"
         >
           <button
             type="button"
@@ -135,10 +183,10 @@ export function DigitalMenuExplorer({ categories }: DigitalMenuExplorerProps) {
             id="menu-tab-all"
             aria-selected={selectedCategory === "all"}
             onClick={() => setSelectedCategory("all")}
-            className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition-all ${
+            className={`shrink-0 rounded-xl px-4 py-2 text-xs font-semibold tracking-[0.04em] transition-all duration-300 ${
               selectedCategory === "all"
-                ? "bg-ink text-canvas"
-                : "bg-paper/80 text-ink-soft hover:bg-paper hover:text-ink"
+                ? "bg-forest text-card shadow-sm"
+                : "border border-line-soft bg-canvas text-ink-soft hover:border-gold hover:text-ink"
             }`}
           >
             Todo o Cardápio
@@ -153,10 +201,10 @@ export function DigitalMenuExplorer({ categories }: DigitalMenuExplorerProps) {
                 id={`menu-tab-${category.slug}`}
                 aria-selected={isSelected}
                 onClick={() => setSelectedCategory(category.slug)}
-                className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition-all ${
+                className={`shrink-0 rounded-xl px-4 py-2 text-xs font-semibold tracking-[0.04em] transition-all duration-300 ${
                   isSelected
-                    ? "bg-ink text-canvas"
-                    : "bg-paper/80 text-ink-soft hover:bg-paper hover:text-ink"
+                    ? "bg-forest text-card shadow-sm"
+                    : "border border-line-soft bg-canvas text-ink-soft hover:border-gold hover:text-ink"
                 }`}
               >
                 {category.name}
@@ -169,27 +217,29 @@ export function DigitalMenuExplorer({ categories }: DigitalMenuExplorerProps) {
       {/* Contador sutil */}
       <div className="flex items-center justify-between text-xs text-ink-muted">
         <span>
-          Exibindo <strong className="font-semibold text-ink">{totalVisibleItems}</strong>{" "}
+          Exibindo{" "}
+          <strong className="font-semibold text-ink">{totalVisibleItems}</strong>{" "}
           {totalVisibleItems === 1 ? "opção" : "opções"}
         </span>
-        <span>Preços em Reais (R$)</span>
+        <span>Valores em Reais (R$)</span>
       </div>
 
       {/* Lista editorial por categoria */}
       {filteredCategories.length === 0 ? (
-        <div className="rounded-2xl border border-line bg-card px-6 py-14 text-center">
+        <div className="rounded-xl border border-line bg-card px-6 py-14 text-center">
           <p className="font-display text-2xl font-medium text-ink">
-            Nenhum item encontrado com esses filtros
+            Nenhum Prato Encontrado Com Esses Filtros
           </p>
           <p className="mt-2 text-sm text-ink-soft">
-            Tente ajustar sua busca ou visualizar todas as categorias do cardápio.
+            Tente ajustar sua busca ou visualizar todas as categorias do nosso
+            cardápio.
           </p>
           <button
             type="button"
             onClick={resetFilters}
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-canvas transition-colors hover:bg-terracotta"
+            className="mt-6 inline-flex items-center gap-2 rounded-xl bg-forest px-5 py-2.5 text-sm font-semibold text-card transition-colors duration-300 hover:bg-terracotta"
           >
-            <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
+            <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Mostrar cardápio completo
           </button>
         </div>
@@ -204,7 +254,7 @@ export function DigitalMenuExplorer({ categories }: DigitalMenuExplorerProps) {
               <div className="border-b border-line pb-4">
                 <h3
                   id={`cat-heading-${category.slug}`}
-                  className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
+                  className="font-display text-3xl font-semibold tracking-tight text-forest sm:text-4xl"
                 >
                   {category.name}
                 </h3>
@@ -221,18 +271,18 @@ export function DigitalMenuExplorer({ categories }: DigitalMenuExplorerProps) {
                   return (
                     <article
                       key={item.id}
-                      className="group flex flex-col justify-between rounded-2xl border border-line/90 bg-card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-terracotta/40 hover:shadow-[0_10px_28px_-12px_rgba(31,25,20,0.12)] sm:p-6"
+                      className="group flex flex-col justify-between rounded-xl border border-line bg-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/80 hover:shadow-[0_14px_34px_-16px_rgba(43,58,44,0.16)] sm:p-6"
                     >
                       <div>
                         <div className="flex items-baseline justify-between gap-3">
-                          <h4 className="font-display text-2xl font-semibold leading-snug text-ink transition-colors group-hover:text-terracotta-dark">
+                          <h4 className="font-display text-2xl font-semibold leading-snug text-ink transition-colors duration-300 group-hover:text-terracotta">
                             {item.name}
                           </h4>
                           <span
                             aria-hidden="true"
                             className="menu-leader hidden h-3 flex-1 sm:block"
                           />
-                          <span className="shrink-0 font-display text-xl font-semibold text-terracotta-dark">
+                          <span className="shrink-0 font-sans text-base font-semibold tabular-nums text-terracotta sm:text-lg">
                             {formatPrice(item.priceCents)}
                           </span>
                         </div>
@@ -248,10 +298,10 @@ export function DigitalMenuExplorer({ categories }: DigitalMenuExplorerProps) {
                             return (
                               <span
                                 key={tag}
-                                className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium ${
+                                className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-medium ${
                                   isChef
-                                    ? "bg-terracotta/10 text-terracotta-dark"
-                                    : "bg-olive/10 text-olive"
+                                    ? "border-terracotta/25 bg-terracotta/10 text-terracotta-dark"
+                                    : "border-forest/20 bg-forest/8 text-forest"
                                 }`}
                               >
                                 {tag}

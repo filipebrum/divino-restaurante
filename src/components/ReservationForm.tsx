@@ -129,17 +129,17 @@ export function ReservationForm() {
   }
 
   return (
-    <div className="rounded-3xl border border-line bg-card p-6 shadow-[0_14px_38px_-24px_rgba(31,25,20,0.18)] sm:p-9">
+    <div className="rounded-xl border border-line bg-card p-6 shadow-[0_16px_40px_-24px_rgba(43,58,44,0.18)] sm:p-9">
       {/* Alternador Nova Reserva / Consultar */}
       <div className="flex flex-wrap gap-2 border-b border-line-soft pb-5">
         <button
           type="button"
           id="reservation-mode-create"
           onClick={() => setMode("create")}
-          className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition-all ${
+          className={`rounded-xl px-4 py-2.5 text-xs font-semibold tracking-[0.04em] transition-all duration-300 ${
             mode === "create"
-              ? "bg-ink text-canvas"
-              : "bg-paper text-ink-soft hover:text-ink"
+              ? "bg-forest text-card shadow-sm"
+              : "border border-line-soft bg-canvas text-ink-soft hover:border-gold hover:text-ink"
           }`}
         >
           Solicitar Reserva
@@ -148,10 +148,10 @@ export function ReservationForm() {
           type="button"
           id="reservation-mode-lookup"
           onClick={() => setMode("lookup")}
-          className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition-all ${
+          className={`inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-semibold tracking-[0.04em] transition-all duration-300 ${
             mode === "lookup"
-              ? "bg-ink text-canvas"
-              : "bg-paper text-ink-soft hover:text-ink"
+              ? "bg-forest text-card shadow-sm"
+              : "border border-line-soft bg-canvas text-ink-soft hover:border-gold hover:text-ink"
           }`}
         >
           <Search className="h-3.5 w-3.5" aria-hidden="true" />
@@ -167,20 +167,23 @@ export function ReservationForm() {
             acompanhar o status.
           </p>
 
-          <form onSubmit={handleLookup} className="flex flex-col gap-3 sm:flex-row">
+          <form
+            onSubmit={handleLookup}
+            className="flex flex-col gap-3 sm:flex-row"
+          >
             <input
               id="lookup-code-input"
               type="text"
               value={lookupCode}
               onChange={(e) => setLookupCode(e.target.value.toUpperCase())}
               placeholder="Ex.: DIV-1024"
-              className="flex-1 rounded-xl border border-line bg-canvas px-4 py-3 text-sm uppercase tracking-wider text-ink placeholder:normal-case placeholder:tracking-normal placeholder:text-ink-muted focus:border-terracotta focus:outline-none"
+              className="flex-1 rounded-xl border border-line bg-canvas px-4 py-3 text-sm uppercase tracking-wider text-ink placeholder:normal-case placeholder:tracking-normal placeholder:text-ink-muted transition-colors duration-300 focus:border-forest focus:outline-none"
             />
             <button
               type="submit"
               id="lookup-submit-btn"
               disabled={lookupLoading}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-ink px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-canvas transition-colors hover:bg-terracotta disabled:opacity-60"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-forest px-6 py-3 text-sm font-semibold text-card transition-all duration-300 hover:bg-terracotta disabled:opacity-60"
             >
               {lookupLoading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -198,20 +201,20 @@ export function ReservationForm() {
           )}
 
           {lookupResult && (
-            <div className="rounded-2xl border border-line bg-paper/50 p-5 space-y-3">
+            <div className="space-y-3 rounded-xl border border-line bg-canvas p-5">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <span className="font-mono text-sm font-semibold text-terracotta-dark">
+                <span className="font-mono text-sm font-semibold text-terracotta">
                   {lookupResult.confirmationCode}
                 </span>
-                <span className="rounded-full bg-card px-3 py-1 text-xs font-semibold text-ink border border-line">
+                <span className="rounded-full border border-line bg-card px-3 py-1 text-xs font-semibold text-forest">
                   {RESERVATION_STATUS_LABELS[lookupResult.status] ??
                     lookupResult.status}
                 </span>
               </div>
-              <p className="font-display text-2xl font-semibold text-ink">
+              <p className="font-display text-2xl font-semibold text-forest">
                 {lookupResult.customerName}
               </p>
-              <div className="flex flex-wrap gap-4 text-sm text-ink-soft">
+              <div className="flex flex-wrap gap-3 text-sm text-ink-soft">
                 <span>{formatDateTimeBR(lookupResult.dateTime)}</span>
                 <span>•</span>
                 <span>
@@ -235,11 +238,11 @@ export function ReservationForm() {
         </div>
       ) : confirmed ? (
         <div className="mt-7 space-y-6">
-          <div className="flex items-start gap-4 rounded-2xl border border-olive/30 bg-olive/10 p-5">
-            <CheckCircle2 className="mt-0.5 h-6 w-6 shrink-0 text-olive" />
+          <div className="flex items-start gap-4 rounded-xl border border-forest/25 bg-forest/8 p-5">
+            <CheckCircle2 className="mt-0.5 h-6 w-6 shrink-0 text-forest" />
             <div>
-              <h2 className="font-display text-2xl font-semibold text-ink">
-                Solicitação de reserva registrada!
+              <h2 className="font-display text-2xl font-semibold text-forest">
+                Solicitação de Reserva Registrada!
               </h2>
               <p className="mt-1 text-sm text-ink-soft">
                 Guarde o seu código abaixo. Nossa equipe confirma a mesa em
@@ -248,7 +251,7 @@ export function ReservationForm() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-line bg-canvas p-6 space-y-4">
+          <div className="space-y-4 rounded-xl border border-line bg-canvas p-6">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line-soft pb-4">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-muted">
@@ -256,12 +259,12 @@ export function ReservationForm() {
                 </p>
                 <p
                   id="reservation-confirmation-code"
-                  className="mt-1 font-mono text-2xl font-bold tracking-wider text-terracotta-dark"
+                  className="mt-1 font-mono text-2xl font-bold tracking-wider text-terracotta"
                 >
                   {confirmed.confirmationCode}
                 </p>
               </div>
-              <span className="rounded-full bg-amber-100 px-3.5 py-1 text-xs font-semibold text-amber-900">
+              <span className="rounded-full border border-gold/40 bg-gold/15 px-3.5 py-1 text-xs font-semibold text-ink">
                 {RESERVATION_STATUS_LABELS[confirmed.status] ?? confirmed.status}
               </span>
             </div>
@@ -269,7 +272,9 @@ export function ReservationForm() {
             <dl className="grid gap-3 text-sm sm:grid-cols-2">
               <div>
                 <dt className="text-xs text-ink-muted">Nome</dt>
-                <dd className="font-medium text-ink">{confirmed.customerName}</dd>
+                <dd className="font-medium text-ink">
+                  {confirmed.customerName}
+                </dd>
               </div>
               <div>
                 <dt className="text-xs text-ink-muted">Data e Horário</dt>
@@ -296,7 +301,7 @@ export function ReservationForm() {
           <button
             type="button"
             onClick={resetForm}
-            className="inline-flex items-center justify-center rounded-full border border-line px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-ink transition-colors hover:border-terracotta hover:text-terracotta"
+            className="inline-flex items-center justify-center rounded-xl border border-line bg-canvas px-6 py-2.5 text-sm font-semibold text-forest transition-all duration-300 hover:border-terracotta hover:text-terracotta"
           >
             Fazer outra reserva
           </button>
@@ -326,7 +331,7 @@ export function ReservationForm() {
                 min={getDefaultDate()}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink focus:border-terracotta focus:outline-none"
+                className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink transition-colors duration-300 focus:border-forest focus:outline-none"
               />
             </div>
 
@@ -342,7 +347,7 @@ export function ReservationForm() {
                 id="res-party-size"
                 value={partySize}
                 onChange={(e) => setPartySize(Number(e.target.value))}
-                className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink focus:border-terracotta focus:outline-none"
+                className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink transition-colors duration-300 focus:border-forest focus:outline-none"
               >
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20].map((size) => (
                   <option key={size} value={size}>
@@ -360,7 +365,7 @@ export function ReservationForm() {
               Horário desejado
             </span>
 
-            <div className="space-y-3 rounded-2xl border border-line-soft bg-canvas/70 p-4">
+            <div className="space-y-4 rounded-xl border border-line-soft bg-canvas/85 p-4">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-ink-muted">
                   Almoço
@@ -371,10 +376,10 @@ export function ReservationForm() {
                       key={slot}
                       type="button"
                       onClick={() => setTime(slot)}
-                      className={`rounded-lg border px-3.5 py-2 text-xs font-semibold transition-all ${
+                      className={`rounded-lg border px-3.5 py-2 text-xs font-semibold transition-all duration-300 ${
                         time === slot
-                          ? "border-terracotta bg-terracotta text-canvas"
-                          : "border-line bg-card text-ink-soft hover:border-terracotta/50 hover:text-ink"
+                          ? "border-forest bg-forest text-card shadow-sm"
+                          : "border-line bg-card text-ink-soft hover:border-gold hover:text-ink"
                       }`}
                     >
                       {slot}
@@ -393,10 +398,10 @@ export function ReservationForm() {
                       key={slot}
                       type="button"
                       onClick={() => setTime(slot)}
-                      className={`rounded-lg border px-3.5 py-2 text-xs font-semibold transition-all ${
+                      className={`rounded-lg border px-3.5 py-2 text-xs font-semibold transition-all duration-300 ${
                         time === slot
-                          ? "border-terracotta bg-terracotta text-canvas"
-                          : "border-line bg-card text-ink-soft hover:border-terracotta/50 hover:text-ink"
+                          ? "border-forest bg-forest text-card shadow-sm"
+                          : "border-line bg-card text-ink-soft hover:border-gold hover:text-ink"
                       }`}
                     >
                       {slot}
@@ -420,7 +425,7 @@ export function ReservationForm() {
               id="res-occasion"
               value={occasion}
               onChange={(e) => setOccasion(e.target.value)}
-              className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink focus:border-terracotta focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink transition-colors duration-300 focus:border-forest focus:outline-none"
             >
               {RESERVATION_OCCASIONS.map((item) => (
                 <option key={item} value={item}>
@@ -446,7 +451,7 @@ export function ReservationForm() {
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 placeholder="Como devemos chamar você?"
-                className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink placeholder:text-ink-muted focus:border-terracotta focus:outline-none"
+                className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink placeholder:text-ink-muted transition-colors duration-300 focus:border-forest focus:outline-none"
               />
             </div>
 
@@ -463,8 +468,8 @@ export function ReservationForm() {
                 required
                 value={customerPhone}
                 onChange={(e) => setCustomerPhone(e.target.value)}
-                placeholder="(11) 99999-9999"
-                className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink placeholder:text-ink-muted focus:border-terracotta focus:outline-none"
+                placeholder="(31) 99999-9999"
+                className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink placeholder:text-ink-muted transition-colors duration-300 focus:border-forest focus:outline-none"
               />
             </div>
 
@@ -481,7 +486,7 @@ export function ReservationForm() {
                 value={customerEmail}
                 onChange={(e) => setCustomerEmail(e.target.value)}
                 placeholder="voce@email.com"
-                className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink placeholder:text-ink-muted focus:border-terracotta focus:outline-none"
+                className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink placeholder:text-ink-muted transition-colors duration-300 focus:border-forest focus:outline-none"
               />
             </div>
           </div>
@@ -498,8 +503,8 @@ export function ReservationForm() {
               rows={3}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Ex.: cadeira infantil, alergia alimentar, mesa próxima à janela..."
-              className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink placeholder:text-ink-muted focus:border-terracotta focus:outline-none"
+              placeholder="Ex.: mesa na área externa pet-friendly, cadeira infantil, alergia alimentar..."
+              className="mt-2 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink placeholder:text-ink-muted transition-colors duration-300 focus:border-forest focus:outline-none"
             />
           </div>
 
@@ -507,7 +512,7 @@ export function ReservationForm() {
             type="submit"
             id="res-submit-btn"
             disabled={submitting}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-7 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-canvas transition-all hover:bg-terracotta disabled:opacity-60"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-forest px-7 py-4 text-sm font-semibold text-card shadow-[0_12px_28px_-14px_rgba(43,58,44,0.5)] transition-all duration-300 hover:bg-terracotta disabled:opacity-60"
           >
             {submitting ? (
               <>

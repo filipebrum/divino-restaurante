@@ -1,32 +1,46 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Amazon BT";
+  src: url("/fonts/amazon-bt.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --surface-canvas: #faf8f5;
-  --surface-paper: #f3eee7;
-  --surface-card: #ffffff;
-  --ink-primary: #262425;
-  --ink-secondary: #585250;
-  --ink-muted: #7f7875;
-  --accent-terracotta: #c82b34;
-  --accent-terracotta-dark: #a11f27;
-  --accent-olive: #3f5e45;
-  --border-warm: #e6dfd5;
-  --border-subtle: #f0eae1;
+  --surface-canvas: #f4efe6;
+  --surface-paper: #ece5d8;
+  --surface-card: #faf7f2;
+  --brand-forest: #2b3a2c;
+  --brand-forest-dark: #202c21;
+  --ink-primary: #22201e;
+  --ink-secondary: #5c564e;
+  --ink-muted: #6b645b;
+  --accent-terracotta: #8c4a32;
+  --accent-terracotta-dark: #703925;
+  --accent-gold: #c59b43;
+  --accent-olive: #2b3a2c;
+  --border-warm: #dfd6c7;
+  --border-subtle: #e9e2d5;
 }
 
 @theme inline {
   --color-canvas: var(--surface-canvas);
   --color-paper: var(--surface-paper);
   --color-card: var(--surface-card);
+  --color-forest: var(--brand-forest);
+  --color-forest-dark: var(--brand-forest-dark);
   --color-ink: var(--ink-primary);
   --color-ink-soft: var(--ink-secondary);
   --color-ink-muted: var(--ink-muted);
   --color-terracotta: var(--accent-terracotta);
   --color-terracotta-dark: var(--accent-terracotta-dark);
+  --color-gold: var(--accent-gold);
   --color-olive: var(--accent-olive);
   --color-line: var(--border-warm);
   --color-line-soft: var(--border-subtle);
-  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-serif: "Amazon BT", var(--font-playfair), Georgia, serif;
   --font-sans: var(--font-jakarta), system-ui, -apple-system, sans-serif;
 }
 
@@ -46,18 +60,24 @@ body {
 }
 
 .editorial-texture {
+  background-color: var(--surface-canvas);
   background-image: radial-gradient(
-    rgba(31, 25, 20, 0.045) 0.75px,
-    transparent 0.75px
-  );
-  background-size: 22px 22px;
+      ellipse 80% 60% at 15% 0%,
+      rgba(197, 155, 67, 0.08),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 70% 55% at 90% 100%,
+      rgba(43, 58, 44, 0.055),
+      transparent 65%
+    );
 }
 
 .menu-leader {
   background-image: radial-gradient(
     circle,
-    rgba(132, 117, 104, 0.45) 1px,
-    transparent 1.2px
+    rgba(140, 74, 50, 0.35) 1px,
+    transparent 1.25px
   );
   background-position: bottom;
   background-size: 7px 2px;
