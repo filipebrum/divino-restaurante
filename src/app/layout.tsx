@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { SiteChrome } from "@/components/SiteChrome";
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -19,11 +20,11 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "diVino Restaurante | Cozinha Brasileira Contemporânea & Reservas",
+    default: "diVino Restaurante | Gastronomia Autoral no Vale do Sol, Nova Lima",
     template: "%s | diVino Restaurante",
   },
   description:
-    "Conheça o diVino Restaurante: cozinha autoral, cardápio digital atualizado, reservas de mesas online e experiências à mesa.",
+    "Gastronomia autoral, fogo lento e hospitalidade entre as montanhas no Vale do Sol, Nova Lima/MG. Integrante da Associação dos Restaurantes da Boa Lembrança desde 2012.",
 };
 
 export default function RootLayout({
@@ -34,9 +35,9 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${cormorant.variable} ${jakarta.variable} h-full antialiased`}
+      className={`${playfair.variable} ${jakarta.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-canvas text-ink selection:bg-terracotta/15 selection:text-terracotta-dark">
+      <body className="min-h-full flex flex-col bg-canvas text-ink selection:bg-forest selection:text-card">
         <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
