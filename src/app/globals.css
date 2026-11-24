@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+:root {
+  --surface-canvas: #faf8f5;
+  --surface-paper: #f3eee7;
+  --surface-card: #ffffff;
+  --ink-primary: #262425;
+  --ink-secondary: #585250;
+  --ink-muted: #7f7875;
+  --accent-terracotta: #c82b34;
+  --accent-terracotta-dark: #a11f27;
+  --accent-olive: #3f5e45;
+  --border-warm: #e6dfd5;
+  --border-subtle: #f0eae1;
+}
+
+@theme inline {
+  --color-canvas: var(--surface-canvas);
+  --color-paper: var(--surface-paper);
+  --color-card: var(--surface-card);
+  --color-ink: var(--ink-primary);
+  --color-ink-soft: var(--ink-secondary);
+  --color-ink-muted: var(--ink-muted);
+  --color-terracotta: var(--accent-terracotta);
+  --color-terracotta-dark: var(--accent-terracotta-dark);
+  --color-olive: var(--accent-olive);
+  --color-line: var(--border-warm);
+  --color-line-soft: var(--border-subtle);
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--surface-canvas);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+.font-display {
+  font-family: var(--font-serif);
+}
+
+.editorial-texture {
+  background-image: radial-gradient(
+    rgba(31, 25, 20, 0.045) 0.75px,
+    transparent 0.75px
+  );
+  background-size: 22px 22px;
+}
+
+.menu-leader {
+  background-image: radial-gradient(
+    circle,
+    rgba(132, 117, 104, 0.45) 1px,
+    transparent 1.2px
+  );
+  background-position: bottom;
+  background-size: 7px 2px;
+  background-repeat: repeat-x;
+}

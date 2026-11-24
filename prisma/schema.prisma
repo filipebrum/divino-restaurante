@@ -1,0 +1,145 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model StaffUser {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("ADMIN") // ADMIN | FINANCEIRO | ATENDENTE
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model MenuCategory {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  name        String
+  description String?
+  sortOrder   Int        @default(0)
+  active      Boolean    @default(true)
+  items       MenuItem[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model MenuItem {
+  id          String       @id @default(cuid())
+  slug        String       @unique
+  name        String
+  description String
+  priceCents  Int
+  imageUrl    String?
+  tags        String       @default("")
+  featured    Boolean      @default(false)
+  available   Boolean      @default(true)
+  sortOrder   Int          @default(0)
+  categoryId  String
+  category    MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([categoryId])
+}
+
+model Reservation {
+  id               String   @id @default(cuid())
+  confirmationCode String   @unique
+  customerName     String
+  customerPhone    String
+  customerEmail    String?
+  partySize        Int
+  dateTime         DateTime
+  occasion         String?
+  status           String   @default("PENDING") // PENDING | CONFIRMED | CANCELLED | COMPLETED
+  notes            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([dateTime])
+  @@index([status])
+}
+
+model FinancialEntry {
+  id            String    @id @default(cuid())
+  type          String    // INCOME | EXPENSE
+  category      String
+  description   String
+  amountCents   Int
+  occurredAt    DateTime  @default(now())
+  dueDate       DateTime?
+  status        String    @default("PAID") // PAID | PENDING | OVERDUE
+  paymentMethod String?   // PIX | DINHEIRO | CREDITO | DEBITO | BOLETO | TRANSFERENCIA
+  notes         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([type, occurredAt])
+  @@index([status])
+}
+
+model TableClosing {
+  id            String   @id @default(cuid())
+  turnDate      String   // YYYY-MM-DD
+  tableId       String
+  subtotalCents Int
+  serviceCents  Int      @default(0)
+  manualService Boolean  @default(false)
+  discountCents Int      @default(0)
+  tipCents      Int      @default(0)
+  creditCents   Int      @default(0)
+  debitCents    Int      @default(0)
+  pixCents      Int      @default(0)
+  cashCents     Int      @default(0)
+  othersCents   Int      @default(0)
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([turnDate])
+}
+
+model CashLedgerMonth {
+  id                      String            @id @default(cuid())
+  monthKey                String            @unique // YYYY-MM
+  label                   String
+  initialBankBalanceCents Int               @default(0) // H2
+  initialCashBalanceCents Int               @default(0) // O2
+  reconcileCefCents       Int               @default(0)
+  reconcileItauCents      Int               @default(0)
+  entries                 CashLedgerEntry[]
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+}
+
+model CashLedgerEntry {
+  id             String          @id @default(cuid())
+  monthId        String
+  month          CashLedgerMonth @relation(fields: [monthId], references: [id], onDelete: Cascade)
+  date           String          // YYYY-MM-DD (Col A)
+  hist           String          // Histórico (Col B)
+  pixPJCents     Int             @default(0) // Col D
+  creditCents    Int             @default(0) // Col E
+  entradasCents  Int             @default(0) // Col F
+  saidasCents    Int             @default(0) // Col G
+  proLaboreCents Int             @default(0) // Col I
+  pixDepCents    Int             @default(0) // Col J
+  debitCents     Int             @default(0) // Col K
+  vendasCents    Int             @default(0) // Col L
+  dnhEntCents    Int             @default(0) // Col M
+  dnhSaiCents    Int             @default(0) // Col N
+  sortOrder      Int             @default(0)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([monthId, date])
+}
+
+
